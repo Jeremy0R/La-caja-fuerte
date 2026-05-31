@@ -7,26 +7,21 @@
     android:background="#0055AA"
     tools:context=".MenuActivity">
 
-    <!-- Título -->
-    <TextView
-        android:id="@+id/tvTituloMenu"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="64dp"
-        android:fontFamily="@font/jersey_10"
-        android:text="CAJA FUERTE"
-        android:textColor="#FFCC00"
-        android:textSize="56sp"
+    <ImageView
+        android:id="@+id/ivLogoMenu"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_marginTop="32dp"
+        android:src="@drawable/cflogo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Botón PLAY -->
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnPlay"
         android:layout_width="200dp"
         android:layout_height="60dp"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="32dp"
         android:background="@drawable/btn_pixel_art"
         android:fontFamily="@font/jersey_10"
         android:text="PLAY"
@@ -34,9 +29,8 @@
         android:textSize="32sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvTituloMenu" />
+        app:layout_constraintTop_toBottomOf="@+id/ivLogoMenu" />
 
-    <!-- Botón NIVELES -->
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnNiveles"
         android:layout_width="200dp"
@@ -51,18 +45,57 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnPlay" />
 
-    <!-- Contenedor para los iconos de abajo (Ajustes, Corona, Estrella, etc) -->
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="48dp"
         android:orientation="horizontal"
-        android:spacing="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <!-- Aquí pondremos tus iconos (ImageViews) más adelante -->
+        <ImageButton
+            android:id="@+id/btnAjustes"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/bg_boton_circular"
+            android:padding="10dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_ajustes"
+            app:tint="#333333" />
+
+        <ImageButton
+            android:id="@+id/btnCorona"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/bg_boton_circular"
+            android:padding="10dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_corona"
+            app:tint="#333333" />
+
+        <ImageButton
+            android:id="@+id/btnEstrella"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/bg_boton_circular"
+            android:padding="10dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_star"
+            app:tint="#333333" />
+
+        <ImageButton
+            android:id="@+id/btnCreditos"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/bg_boton_circular"
+            android:padding="10dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_arroba"
+            app:tint="#333333" />
 
     </LinearLayout>
 
