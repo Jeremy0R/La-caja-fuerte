@@ -12,6 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LaCajaFuerte">
         <activity
+            android:name=".GameActivity"
+            android:exported="false" />
+        <activity
+            android:name=".NivelesActivity"
+            android:exported="false" />
+        <activity
             android:name=".MenuActivity"
             android:exported="false" />
         <activity

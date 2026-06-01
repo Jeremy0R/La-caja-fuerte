@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0055AA"
+    tools:context=".GameActivity">
+
+    <LinearLayout
+        android:id="@+id/topBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
+            android:id="@+id/btnPausa"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/bg_boton_circular"
+            android:padding="12dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_pause"
+            app:tint="#333333" />
+
+        <ImageButton
+            android:id="@+id/btnPista"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/bg_boton_circular"
+            android:padding="12dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_idea"
+            app:tint="#333333" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvNivelActual"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:fontFamily="@font/jersey_10"
+        android:text="NIVEL 1"
+        android:textColor="#FFCC00"
+        android:textSize="36sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvAcertijo"
+        android:layout_width="320dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="32dp"
+        android:background="#E0E0E0"
+        android:fontFamily="@font/jersey_10"
+        android:gravity="center"
+        android:text="4 + 8 = ?"
+        android:textColor="#333333"
+        android:textSize="64sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/topBar" />
+    <TextView
+        android:id="@+id/tvRespuesta"
+        android:layout_width="320dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="24dp"
+        android:background="#333333"
+        android:fontFamily="@font/jersey_10"
+        android:gravity="center"
+        android:text=""
+        android:hint="tu respuesta"
+        android:textColorHint="#888888"
+        android:textColor="#FFFFFF"
+        android:textSize="48sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvAcertijo" />
+
+    <GridLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:columnCount="3"
+        android:rowCount="4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvRespuesta">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnNum1"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_margin="8dp"
+            android:background="@drawable/btn_pixel_art"
+            android:fontFamily="@font/jersey_10"
+            android:text="1"
+            android:textColor="#333333"
+            android:textSize="36sp" />
+
+    </GridLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

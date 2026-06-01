@@ -1,5 +1,6 @@
 package com.example.lacajafuerte;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.Toast;
@@ -15,14 +16,16 @@ public class MenuActivity extends AppCompatActivity {
         Button btnPlay = findViewById(R.id.btnPlay);
         Button btnNiveles = findViewById(R.id.btnNiveles);
 
+        // Al hacer clic en PLAY, vamos a la pantalla de Juego
         btnPlay.setOnClickListener(v -> {
-            // Aquí irá el Intent hacia GameActivity o LevelSelectionActivity
-            Toast.makeText(this, "¡Iniciando Juego!", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(MenuActivity.this, GameActivity.class);
+            startActivity(intent);
         });
 
+        // Al hacer clic en NIVELES, vamos a la pantalla de Niveles
         btnNiveles.setOnClickListener(v -> {
-            // Aquí irá el Intent hacia LevelSelectionActivity
-            Toast.makeText(this, "Abriendo Niveles...", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(MenuActivity.this, NivelesActivity.class);
+            startActivity(intent);
         });
     }
 }
