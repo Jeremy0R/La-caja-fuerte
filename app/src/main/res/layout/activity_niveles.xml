@@ -49,7 +49,7 @@
             android:layout_marginBottom="24dp"
             android:background="@drawable/btn_pixel_art"
             android:fontFamily="@font/jersey_10"
-            android:text="1. SUMAS"
+            android:text="1. SUMA"
             android:textColor="#333333"
             android:textSize="32sp" />
 
@@ -60,7 +60,7 @@
             android:layout_marginBottom="24dp"
             android:background="@drawable/btn_pixel_art"
             android:fontFamily="@font/jersey_10"
-            android:text="2. RESTAS"
+            android:text="2. RESTA"
             android:textColor="#333333"
             android:textSize="32sp" />
 
@@ -71,7 +71,7 @@
             android:layout_marginBottom="24dp"
             android:background="@drawable/btn_pixel_art"
             android:fontFamily="@font/jersey_10"
-            android:text="3. MULTIPLICAR"
+            android:text="3. MULTIPLICACIÓN"
             android:textColor="#333333"
             android:textSize="32sp" />
 
@@ -81,7 +81,7 @@
             android:layout_height="60dp"
             android:background="@drawable/btn_pixel_art"
             android:fontFamily="@font/jersey_10"
-            android:text="4. DIVIDIR"
+            android:text="4. DIVISIÓN"
             android:textColor="#333333"
             android:textSize="32sp" />
 
