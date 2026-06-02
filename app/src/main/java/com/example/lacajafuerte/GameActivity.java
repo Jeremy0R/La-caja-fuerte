@@ -7,32 +7,54 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
+// Al estar en el mismo paquete, no hace falta importar OperacionMatematica, Suma ni GestorDatos.
+
+
 public class GameActivity extends AppCompatActivity {
 
-    // Variables globales de la pantalla
     private TextView tvRespuesta;
+    private TextView tvAcertijo;
     private String respuestaActual = "";
+
+    // Variables para nuestra lógica
+    private OperacionMatematica operacionActual;
+    private GestorDatos gestorDatos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        // Enlazamos la pantalla negra donde se escriben los números
         tvRespuesta = findViewById(R.id.tvRespuesta);
+        tvAcertijo = findViewById(R.id.tvAcertijo);
 
-        // 1. Creamos un Listener (escuchador) común para todos los botones numéricos
+        // Inicializamos el gestor para guardar el puntaje
+        gestorDatos = new GestorDatos(this);
+
+        // Identificamos qué operación eligió el usuario en la pantalla anterior
+        String tipoOperacion = getIntent().getStringExtra("TIPO_OPERACION");
+
+        // Por ahora iniciamos con Suma, nivel 1
+        if ("SUMA".equals(tipoOperacion)) {
+            operacionActual = new Suma(1);
+        } else {
+            // Valor por defecto por si acaso
+            operacionActual = new Suma(1);
+        }
+
+        // Generamos el primer acertijo al entrar a la pantalla
+        generarNuevoAcertijo();
+
+        // 1. Listener de los botones numéricos
         View.OnClickListener listenerNumeros = view -> {
             Button botonPresionado = (Button) view;
-
-            // Limitamos a 5 dígitos para que no escriban números infinitos y rompan el diseño
             if (respuestaActual.length() < 5) {
                 respuestaActual += botonPresionado.getText().toString();
                 tvRespuesta.setText(respuestaActual);
             }
         };
 
-        // 2. Le asignamos ese mismo Listener a los 10 botones numéricos
+        // Asignamos el listener a los 10 botones (asegúrate de que los IDs coincidan con tu XML)
         findViewById(R.id.btnNum0).setOnClickListener(listenerNumeros);
         findViewById(R.id.btnNum1).setOnClickListener(listenerNumeros);
         findViewById(R.id.btnNum2).setOnClickListener(listenerNumeros);
@@ -44,23 +66,43 @@ public class GameActivity extends AppCompatActivity {
         findViewById(R.id.btnNum8).setOnClickListener(listenerNumeros);
         findViewById(R.id.btnNum9).setOnClickListener(listenerNumeros);
 
-        // 3. Lógica del botón DEL (Borrar el último número)
+        // 2. Lógica del botón DEL (Borrar)
         findViewById(R.id.btnBorrar).setOnClickListener(v -> {
             if (!respuestaActual.isEmpty()) {
-                // Cortamos el último carácter del texto
                 respuestaActual = respuestaActual.substring(0, respuestaActual.length() - 1);
                 tvRespuesta.setText(respuestaActual);
             }
         });
 
-        // 4. Lógica del botón OK (Confirmar respuesta)
+        // 3. Lógica del botón OK (¡Aquí ocurre la magia!)
         findViewById(R.id.btnOk).setOnClickListener(v -> {
             if (respuestaActual.isEmpty()) {
-                Toast.makeText(this, "¡Escribe una respuesta primero!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Escribe una respuesta", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            // Usamos la sobrecarga de métodos que creaste en la clase padre
+            boolean esCorrecto = operacionActual.verificarRespuesta(respuestaActual);
+
+            if (esCorrecto) {
+                Toast.makeText(this, "¡CORRECTO! +1 Corona", Toast.LENGTH_SHORT).show();
+                gestorDatos.agregarCoronas(1); // Guardamos el progreso (Persistencia)
+                generarNuevoAcertijo(); // Pasamos al siguiente reto
             } else {
-                // Por ahora solo mostraremos un mensajito, luego lo conectaremos con la validación matemática
-                Toast.makeText(this, "Verificando respuesta: " + respuestaActual, Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Inténtalo de nuevo", Toast.LENGTH_SHORT).show();
+                // Limpiamos el texto para que lo vuelva a intentar
+                respuestaActual = "";
+                tvRespuesta.setText(respuestaActual);
             }
         });
+    }
+
+    // Método para encapsular la generación de un nuevo reto
+    private void generarNuevoAcertijo() {
+        operacionActual.generarOperacion();
+        tvAcertijo.setText(operacionActual.getAcertijoComoTexto());
+        // Limpiamos la pantalla negra para la nueva respuesta
+        respuestaActual = "";
+        tvRespuesta.setText(respuestaActual);
     }
 }
