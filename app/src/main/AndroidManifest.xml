@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LaCajaFuerte">
         <activity
+            android:name=".LogrosActivity"
+            android:exported="false" />
+        <activity
             android:name=".GameActivity"
             android:exported="false" />
         <activity

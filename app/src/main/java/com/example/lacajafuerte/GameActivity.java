@@ -31,15 +31,17 @@ public class GameActivity extends AppCompatActivity {
         // Inicializamos el gestor para guardar el puntaje
         gestorDatos = new GestorDatos(this);
 
-        // Identificamos qué operación eligió el usuario en la pantalla anterior
+        // Identificamos qué operación eligió el usuario
         String tipoOperacion = getIntent().getStringExtra("TIPO_OPERACION");
 
-        // Por ahora iniciamos con Suma, nivel 1
-        if ("SUMA".equals(tipoOperacion)) {
-            operacionActual = new Suma(1);
+        if ("RESTA".equals(tipoOperacion)) {
+            operacionActual = new Resta(1);
+        } else if ("MULT".equals(tipoOperacion)) {
+            operacionActual = new Multiplicacion(1);
+        } else if ("DIV".equals(tipoOperacion)) {
+            operacionActual = new Division(1);
         } else {
-            // Valor por defecto por si acaso
-            operacionActual = new Suma(1);
+            operacionActual = new Suma(1); // Por defecto Suma
         }
 
         // Generamos el primer acertijo al entrar a la pantalla

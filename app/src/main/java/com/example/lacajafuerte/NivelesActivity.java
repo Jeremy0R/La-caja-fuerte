@@ -15,15 +15,23 @@ public class NivelesActivity extends AppCompatActivity {
 
         ImageButton btnBack = findViewById(R.id.btnBack);
         Button btnSumas = findViewById(R.id.btnSumas);
+        Button btnRestas = findViewById(R.id.btnRestas);
+        Button btnMult = findViewById(R.id.btnMult);
+        Button btnDiv = findViewById(R.id.btnDiv);
 
         // El botón de atrás simplemente "cierra" esta pantalla y vuelve al menú
         btnBack.setOnClickListener(v -> finish());
 
-        // El botón de Sumas abre el juego y le avisa que debe generar sumas
-        btnSumas.setOnClickListener(v -> {
-            Intent intent = new Intent(NivelesActivity.this, GameActivity.class);
-            intent.putExtra("TIPO_OPERACION", "SUMA");
-            startActivity(intent);
-        });
+        // Configuración de los botones para cada operación
+        btnSumas.setOnClickListener(v -> iniciarJuego("SUMA"));
+        btnRestas.setOnClickListener(v -> iniciarJuego("RESTA"));
+        btnMult.setOnClickListener(v -> iniciarJuego("MULT"));
+        btnDiv.setOnClickListener(v -> iniciarJuego("DIV"));
+    }
+
+    private void iniciarJuego(String tipo) {
+        Intent intent = new Intent(NivelesActivity.this, GameActivity.class);
+        intent.putExtra("TIPO_OPERACION", tipo);
+        startActivity(intent);
     }
 }
