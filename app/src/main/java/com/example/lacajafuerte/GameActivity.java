@@ -1,24 +1,29 @@
 package com.example.lacajafuerte;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
-
-// Al estar en el mismo paquete, no hace falta importar OperacionMatematica, Suma ni GestorDatos.
-
 
 public class GameActivity extends AppCompatActivity {
 
     private TextView tvRespuesta;
     private TextView tvAcertijo;
+    private ProgressBar progressBarJuego;
     private String respuestaActual = "";
 
-    // Variables para nuestra lógica
+    // Variables de lógica
     private OperacionMatematica operacionActual;
     private GestorDatos gestorDatos;
+
+    // Variables para el nuevo flujo de nivel
+    private int preguntasContestadas = 0;
+    private final int MAX_PREGUNTAS = 10;
+    private int puntajeNivel = 0; // Para sumar puntos o restarlos si usan ayudas
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,11 +32,14 @@ public class GameActivity extends AppCompatActivity {
 
         tvRespuesta = findViewById(R.id.tvRespuesta);
         tvAcertijo = findViewById(R.id.tvAcertijo);
+        progressBarJuego = findViewById(R.id.progressBarJuego);
 
-        // Inicializamos el gestor para guardar el puntaje
+        // Configuramos la barra de progreso
+        progressBarJuego.setMax(MAX_PREGUNTAS);
+        progressBarJuego.setProgress(0);
+
         gestorDatos = new GestorDatos(this);
 
-        // Identificamos qué operación eligió el usuario
         String tipoOperacion = getIntent().getStringExtra("TIPO_OPERACION");
 
         if ("RESTA".equals(tipoOperacion)) {
@@ -41,13 +49,12 @@ public class GameActivity extends AppCompatActivity {
         } else if ("DIV".equals(tipoOperacion)) {
             operacionActual = new Division(1);
         } else {
-            operacionActual = new Suma(1); // Por defecto Suma
+            operacionActual = new Suma(1);
         }
 
-        // Generamos el primer acertijo al entrar a la pantalla
         generarNuevoAcertijo();
 
-        // 1. Listener de los botones numéricos
+        // 1. Listener de los botones numéricos (Se mantiene igual)
         View.OnClickListener listenerNumeros = view -> {
             Button botonPresionado = (Button) view;
             if (respuestaActual.length() < 5) {
@@ -56,7 +63,7 @@ public class GameActivity extends AppCompatActivity {
             }
         };
 
-        // Asignamos el listener a los 10 botones (asegúrate de que los IDs coincidan con tu XML)
+        // Asignamos el listener a los 10 botones
         findViewById(R.id.btnNum0).setOnClickListener(listenerNumeros);
         findViewById(R.id.btnNum1).setOnClickListener(listenerNumeros);
         findViewById(R.id.btnNum2).setOnClickListener(listenerNumeros);
@@ -68,7 +75,7 @@ public class GameActivity extends AppCompatActivity {
         findViewById(R.id.btnNum8).setOnClickListener(listenerNumeros);
         findViewById(R.id.btnNum9).setOnClickListener(listenerNumeros);
 
-        // 2. Lógica del botón DEL (Borrar)
+        // 2. Lógica del botón DEL
         findViewById(R.id.btnBorrar).setOnClickListener(v -> {
             if (!respuestaActual.isEmpty()) {
                 respuestaActual = respuestaActual.substring(0, respuestaActual.length() - 1);
@@ -76,35 +83,54 @@ public class GameActivity extends AppCompatActivity {
             }
         });
 
-        // 3. Lógica del botón OK (¡Aquí ocurre la magia!)
+        // 3. Lógica del botón OK (¡Actualizado con el progreso!)
         findViewById(R.id.btnOk).setOnClickListener(v -> {
             if (respuestaActual.isEmpty()) {
                 Toast.makeText(this, "Escribe una respuesta", Toast.LENGTH_SHORT).show();
                 return;
             }
 
-            // Usamos la sobrecarga de métodos que creaste en la clase padre
             boolean esCorrecto = operacionActual.verificarRespuesta(respuestaActual);
 
             if (esCorrecto) {
-                Toast.makeText(this, "¡CORRECTO! +1 Corona", Toast.LENGTH_SHORT).show();
-                gestorDatos.agregarCoronas(1); // Guardamos el progreso (Persistencia)
-                generarNuevoAcertijo(); // Pasamos al siguiente reto
+                preguntasContestadas++;
+                puntajeNivel += 10; // 10 puntos por acierto limpio
+                progressBarJuego.setProgress(preguntasContestadas);
+
+                // Verificamos si ya terminó el nivel
+                if (preguntasContestadas >= MAX_PREGUNTAS) {
+                    finalizarNivel();
+                } else {
+                    Toast.makeText(this, "¡Bien! Siguiente...", Toast.LENGTH_SHORT).show();
+                    generarNuevoAcertijo();
+                }
             } else {
                 Toast.makeText(this, "Inténtalo de nuevo", Toast.LENGTH_SHORT).show();
-                // Limpiamos el texto para que lo vuelva a intentar
+                puntajeNivel -= 2; // Castigo por error (opcional)
                 respuestaActual = "";
                 tvRespuesta.setText(respuestaActual);
             }
         });
     }
 
-    // Método para encapsular la generación de un nuevo reto
     private void generarNuevoAcertijo() {
         operacionActual.generarOperacion();
         tvAcertijo.setText(operacionActual.getAcertijoComoTexto());
-        // Limpiamos la pantalla negra para la nueva respuesta
         respuestaActual = "";
         tvRespuesta.setText(respuestaActual);
+    }
+
+    //Método nuevo para manejar la victoria
+    private void finalizarNivel() {
+        // Otorgamos la recompensa global (ej. 1 corona por pasar el nivel)
+        gestorDatos.agregarCoronas(1);
+
+        // Pasamos a la nueva pantalla de Victoria (¡Una Activity más para la rúbrica!)
+        Intent intent = new Intent(GameActivity.this, VictoriaActivity.class);
+        intent.putExtra("PUNTAJE_FINAL", puntajeNivel);
+        startActivity(intent);
+
+        // Cerramos GameActivity para que si el niño presiona "Atrás", no vuelva al juego terminado
+        finish();
     }
 }
