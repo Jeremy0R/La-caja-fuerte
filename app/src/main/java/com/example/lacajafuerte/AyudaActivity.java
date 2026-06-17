@@ -1,24 +1,23 @@
 package com.example.lacajafuerte;
 
 import android.os.Bundle;
-
-import androidx.activity.EdgeToEdge;
+import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
+/**
+ * CLASE: AyudaActivity
+ * PROPOSITO: Mostrar las instrucciones de juego y las reglas de puntuación al usuario.
+ */
 public class AyudaActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_ayuda);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+
+        Button btnEntendido = findViewById(R.id.btnEntendido);
+
+        // Al presionar el botón, se cierra esta Activity y vuelve a la anterior
+        btnEntendido.setOnClickListener(v -> finish());
     }
 }

@@ -57,6 +57,18 @@ public class GameActivity extends AppCompatActivity {
 
         generarNuevoAcertijo();
 
+        // Lógica del botón de Pausa (Tu ImageButton con el id btnPausa)
+        findViewById(R.id.btnPausa).setOnClickListener(v -> {
+            Intent intentPausa = new Intent(GameActivity.this, PausaActivity.class);
+            startActivity(intentPausa);
+        });
+
+        // (Opcional) De una vez puedes enlazar tu botón de pista a la Ayuda
+        findViewById(R.id.btnPista).setOnClickListener(v -> {
+            Intent intentAyuda = new Intent(GameActivity.this, AyudaActivity.class);
+            startActivity(intentAyuda);
+        });
+
         // 1. Listener de los botones numéricos (Se mantiene igual)
         View.OnClickListener listenerNumeros = view -> {
             Button botonPresionado = (Button) view;

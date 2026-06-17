@@ -1,24 +1,34 @@
 package com.example.lacajafuerte;
 
+import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.activity.EdgeToEdge;
+import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
+/**
+ * CLASE: PausaActivity
+ * PROPOSITO: Interrumpir la partida actual ofreciendo opciones para continuar o abandonar.
+ */
 public class PausaActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_pausa);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
+
+        Button btnReanudar = findViewById(R.id.btnReanudar);
+        Button btnSalirMenu = findViewById(R.id.btnSalirMenu);
+
+        // LOGICA REANUDAR: Solo cerramos esta pantalla emergente
+        btnReanudar.setOnClickListener(v -> finish());
+
+        // LOGICA SALIR: Regresamos al menú y limpiamos el historial
+        btnSalirMenu.setOnClickListener(v -> {
+            Intent intent = new Intent(PausaActivity.this, MenuActivity.class);
+            // Esto evita que si le das "Atrás" en el menú, te regrese al juego pausado
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            finish();
         });
     }
 }

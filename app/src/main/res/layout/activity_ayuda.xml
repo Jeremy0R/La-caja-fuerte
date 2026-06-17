@@ -1,10 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AyudaActivity">
+    android:background="#0055AA">
+
+    <TextView
+        android:id="@+id/tvTituloAyuda"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="64dp"
+        android:fontFamily="@font/jersey_10"
+        android:text="CÓMO JUGAR"
+        android:textColor="#FFCC00"
+        android:textSize="56sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvInstrucciones"
+        android:layout_width="320dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:fontFamily="@font/jersey_10"
+        android:gravity="center"
+        android:text="1. Resuelve el acertijo usando tu teclado numérico.\n\n2. Tienes un límite de 10 aciertos por nivel para llenar la barra.\n\n3. El botón del 'foquito' te da una pista, ¡pero te restará 2 puntos!\n\n4. Al abrir la caja fuerte ganarás Coronas. ¡Úsalas en la Bóveda para nuevos retos!"
+        android:textColor="#FFFFFF"
+        android:textSize="28sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTituloAyuda" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnEntendido"
+        android:layout_width="250dp"
+        android:layout_height="80dp"
+        android:layout_marginBottom="48dp"
+        android:background="@drawable/btn_pixel_art"
+        android:fontFamily="@font/jersey_10"
+        android:text="¡ENTENDIDO!"
+        android:textColor="#333333"
+        android:textSize="32sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
