@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0055AA">
+
+    <TextView
+        android:id="@+id/tvSoporteTitulo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="64dp"
+        android:fontFamily="@font/jersey_10"
+        android:text="SOPORTE TÉCNICO"
+        android:textColor="#FFCC00"
+        android:textSize="48sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvSoporteDesc"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:fontFamily="@font/jersey_10"
+        android:gravity="center"
+        android:text="¿Tienes problemas con la aplicación? ¡Contáctanos!"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvSoporteTitulo" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnLlamar"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:background="@drawable/btn_pixel_art"
+        android:fontFamily="@font/jersey_10"
+        android:text="LLAMAR AHORA"
+        android:textColor="#333333"
+        android:textSize="28sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvSoporteDesc" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnSms"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/btn_pixel_art"
+        android:fontFamily="@font/jersey_10"
+        android:text="ENVIAR SMS"
+        android:textColor="#333333"
+        android:textSize="28sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnLlamar" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
