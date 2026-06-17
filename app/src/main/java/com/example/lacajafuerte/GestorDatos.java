@@ -63,4 +63,28 @@ public class GestorDatos {
     public int obtenerCoronas() {
         return sharedPreferences.getInt(KEY_CORONAS, 0);
     }
+
+    /**
+     * METODO: setSonidoActivado / isSonidoActivado
+     * Guarda y lee la preferencia de sonido del usuario. Por defecto es true.
+     */
+    public void setSonidoActivado(boolean activado) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(KEY_SONIDO, activado);
+        editor.apply();
+    }
+
+    public boolean isSonidoActivado() {
+        return sharedPreferences.getBoolean(KEY_SONIDO, true);
+    }
+
+    /**
+     * METODO: reiniciarProgreso
+     * Borra todas las coronas acumuladas.
+     */
+    public void reiniciarProgreso() {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(KEY_CORONAS, 0);
+        editor.apply();
+    }
 }

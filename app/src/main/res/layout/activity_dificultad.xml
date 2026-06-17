@@ -1,10 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DificultadActivity">
+    android:background="#0055AA">
+
+    <TextView
+        android:id="@+id/tvTituloDificultad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="64dp"
+        android:fontFamily="@font/jersey_10"
+        android:text="DIFICULTAD"
+        android:textColor="#FFCC00"
+        android:textSize="56sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnFacil"
+        android:layout_width="250dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="64dp"
+        android:background="@drawable/btn_pixel_art"
+        android:fontFamily="@font/jersey_10"
+        android:text="FÁCIL\n(1 Cifra)"
+        android:textColor="#006600"
+        android:textSize="28sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTituloDificultad" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnMedio"
+        android:layout_width="250dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/btn_pixel_art"
+        android:fontFamily="@font/jersey_10"
+        android:text="MEDIO\n(2 Cifras)"
+        android:textColor="#FF8800"
+        android:textSize="28sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnFacil" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnDificil"
+        android:layout_width="250dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/btn_pixel_art"
+        android:fontFamily="@font/jersey_10"
+        android:text="DIFÍCIL\n(3 Cifras)"
+        android:textColor="#990000"
+        android:textSize="28sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnMedio" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

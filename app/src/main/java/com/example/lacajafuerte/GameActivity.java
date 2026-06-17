@@ -42,14 +42,17 @@ public class GameActivity extends AppCompatActivity {
 
         String tipoOperacion = getIntent().getStringExtra("TIPO_OPERACION");
 
+        // Agrega esta línea para recibir la dificultad (por defecto 1)
+        int nivelDificultad = getIntent().getIntExtra("NIVEL_DIFICULTAD", 1);
+
         if ("RESTA".equals(tipoOperacion)) {
-            operacionActual = new Resta(1);
+            operacionActual = new Resta(nivelDificultad); // Le pasamos la variable
         } else if ("MULT".equals(tipoOperacion)) {
-            operacionActual = new Multiplicacion(1);
+            operacionActual = new Multiplicacion(nivelDificultad);
         } else if ("DIV".equals(tipoOperacion)) {
-            operacionActual = new Division(1);
+            operacionActual = new Division(nivelDificultad);
         } else {
-            operacionActual = new Suma(1);
+            operacionActual = new Suma(nivelDificultad);
         }
 
         generarNuevoAcertijo();
