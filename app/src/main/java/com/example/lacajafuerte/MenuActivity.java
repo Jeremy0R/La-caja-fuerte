@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MenuActivity extends AppCompatActivity {
@@ -16,23 +15,23 @@ public class MenuActivity extends AppCompatActivity {
 
         Button btnPlay = findViewById(R.id.btnPlay);
         Button btnNiveles = findViewById(R.id.btnNiveles);
+        ImageButton btnAjustes = findViewById(R.id.btnAjustes);
         ImageButton btnCorona = findViewById(R.id.btnCorona);
+        ImageButton btnEstrella = findViewById(R.id.btnEstrella);
+        ImageButton btnCreditos = findViewById(R.id.btnCreditos);
 
-        // Al hacer clic en PLAY, vamos a la pantalla de Juego
-        btnPlay.setOnClickListener(v -> {
-            Intent intent = new Intent(MenuActivity.this, GameActivity.class);
-            startActivity(intent);
-        });
+        // 1. PLAY abre la selección de operaciones (NivelesActivity)
+        btnPlay.setOnClickListener(v -> startActivity(new Intent(MenuActivity.this, NivelesActivity.class)));
 
-        btnCorona.setOnClickListener(v -> {
-            Intent intent = new Intent(MenuActivity.this, LogrosActivity.class);
-            startActivity(intent);
-        });
+        // 2. El segundo botón (que ahora visualmente será "LA BÓVEDA") abre la tienda
+        btnNiveles.setOnClickListener(v -> startActivity(new Intent(MenuActivity.this, TiendaActivity.class)));
 
-        // Al hacer clic en NIVELES, vamos a la pantalla de Niveles
-        btnNiveles.setOnClickListener(v -> {
-            Intent intent = new Intent(MenuActivity.this, NivelesActivity.class);
-            startActivity(intent);
-        });
+        btnCorona.setOnClickListener(v -> startActivity(new Intent(MenuActivity.this, LogrosActivity.class)));
+
+        btnAjustes.setOnClickListener(v -> startActivity(new Intent(MenuActivity.this, AjustesActivity.class)));
+
+        btnEstrella.setOnClickListener(v -> startActivity(new Intent(MenuActivity.this, AyudaActivity.class))); // Aquí va el Cómo Jugar
+
+        btnCreditos.setOnClickListener(v -> startActivity(new Intent(MenuActivity.this, SoporteActivity.class))); // Aquí va el SMS/Llamada
     }
 }

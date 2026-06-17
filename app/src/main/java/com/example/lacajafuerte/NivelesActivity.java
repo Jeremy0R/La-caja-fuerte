@@ -30,7 +30,7 @@ public class NivelesActivity extends AppCompatActivity {
     }
 
     private void iniciarJuego(String tipo) {
-        Intent intent = new Intent(NivelesActivity.this, GameActivity.class);
+        Intent intent = new Intent(NivelesActivity.this, DificultadActivity.class);
         intent.putExtra("TIPO_OPERACION", tipo);
         startActivity(intent);
     }

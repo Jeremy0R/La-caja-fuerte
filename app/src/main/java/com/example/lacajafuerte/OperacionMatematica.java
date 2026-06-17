@@ -42,4 +42,11 @@ public abstract class OperacionMatematica {
             return false; // Si por algún error llega texto vacío o raro, no truena la app
         }
     }
+
+    // ==========================================
+    // METODO GETTER: Para obtener la respuesta
+    // ==========================================
+    public int getRespuestaCorrecta() {
+        return this.respuestaCorrecta;
+    }
 }

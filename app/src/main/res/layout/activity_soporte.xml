@@ -1,63 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#0055AA">
+    android:background="#0055AA"
+    android:fillViewport="true">
 
-    <TextView
-        android:id="@+id/tvSoporteTitulo"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="64dp"
-        android:fontFamily="@font/jersey_10"
-        android:text="SOPORTE TÉCNICO"
-        android:textColor="#FFCC00"
-        android:textSize="48sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:paddingBottom="48dp">
 
-    <TextView
-        android:id="@+id/tvSoporteDesc"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:fontFamily="@font/jersey_10"
-        android:gravity="center"
-        android:text="¿Tienes problemas con la aplicación? ¡Contáctanos!"
-        android:textColor="#FFFFFF"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvSoporteTitulo" />
+        <ImageButton
+            android:id="@+id/btnBack"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/bg_boton_circular"
+            android:padding="12dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_izq"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="#333333" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnLlamar"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
-        android:background="@drawable/btn_pixel_art"
-        android:fontFamily="@font/jersey_10"
-        android:text="LLAMAR AHORA"
-        android:textColor="#333333"
-        android:textSize="28sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvSoporteDesc" />
+        <TextView
+            android:id="@+id/tvCreditosTitulo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="48dp"
+            android:fontFamily="@font/jersey_10"
+            android:text="CRÉDITOS"
+            android:textColor="#FFCC00"
+            android:textSize="56sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnSms"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:background="@drawable/btn_pixel_art"
-        android:fontFamily="@font/jersey_10"
-        android:text="ENVIAR SMS"
-        android:textColor="#333333"
-        android:textSize="28sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnLlamar" />
+        <TextView
+            android:id="@+id/tvMensajeDev"
+            android:layout_width="320dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:fontFamily="@font/jersey_10"
+            android:gravity="center"
+            android:text="Hola, soy Jeremy Osorio Ramos.\n\nEscribo para compartir este proyecto con todos los que disfrutan aprender jugando.\n\nComo estudiante de Ingeniería en Computación en la Unistmo Campus Tehuantepec, he trabajado duro, a menudo de madrugada tirando código, con el objetivo de crear una aplicación llena de energía positiva para este cierre de semestre.\n\n¡Gracias por jugar!"
+            android:textColor="#FFFFFF"
+            android:textSize="26sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvCreditosTitulo" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <View
+            android:id="@+id/divisor"
+            android:layout_width="250dp"
+            android:layout_height="2dp"
+            android:layout_marginTop="32dp"
+            android:background="#FFFFFF"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvMensajeDev" />
+
+        <TextView
+            android:id="@+id/tvSoporteDesc"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:fontFamily="@font/jersey_10"
+            android:gravity="center"
+            android:text="¿Necesitas soporte técnico? ¡Contáctame!"
+            android:textColor="#FFCC00"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/divisor" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnLlamar"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/btn_pixel_art"
+            android:fontFamily="@font/jersey_10"
+            android:text="LLAMAR AHORA"
+            android:textColor="#333333"
+            android:textSize="28sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvSoporteDesc" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnSms"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/btn_pixel_art"
+            android:fontFamily="@font/jersey_10"
+            android:text="ENVIAR SMS"
+            android:textColor="#333333"
+            android:textSize="28sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnLlamar" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

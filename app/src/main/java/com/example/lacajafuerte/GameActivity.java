@@ -7,14 +7,17 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
+import android.widget.ImageButton;
 
-public class GameActivity extends AppCompatActivity {
+    public class GameActivity extends AppCompatActivity {
 
-    private TextView tvRespuesta;
-    private TextView tvAcertijo;
-    private ProgressBar progressBarJuego;
-    private String respuestaActual = "";
+        private TextView tvRespuesta;
+        private TextView tvAcertijo;
+        private ProgressBar progressBarJuego;
+        private ImageButton btnPista;
+        private String respuestaActual = "";
 
     // Variables de lógica
     private OperacionMatematica operacionActual;
@@ -41,12 +44,10 @@ public class GameActivity extends AppCompatActivity {
         gestorDatos = new GestorDatos(this);
 
         String tipoOperacion = getIntent().getStringExtra("TIPO_OPERACION");
-
-        // Agrega esta línea para recibir la dificultad (por defecto 1)
         int nivelDificultad = getIntent().getIntExtra("NIVEL_DIFICULTAD", 1);
 
         if ("RESTA".equals(tipoOperacion)) {
-            operacionActual = new Resta(nivelDificultad); // Le pasamos la variable
+            operacionActual = new Resta(nivelDificultad);
         } else if ("MULT".equals(tipoOperacion)) {
             operacionActual = new Multiplicacion(nivelDificultad);
         } else if ("DIV".equals(tipoOperacion)) {
@@ -57,19 +58,42 @@ public class GameActivity extends AppCompatActivity {
 
         generarNuevoAcertijo();
 
-        // Lógica del botón de Pausa (Tu ImageButton con el id btnPausa)
+        // ====================================================================
+        // BLOQUEADOR DE GESTOS LATERALES Y BOTÓN ATRÁS (Mecanismo AndroidX)
+        // ====================================================================
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                // Intercepta tanto el botón físico como el deslizamiento lateral de gestos
+                Toast.makeText(GameActivity.this, "Usa el botón de Pausa (||) para salir", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        // Lógica del botón de Pausa (||)
         findViewById(R.id.btnPausa).setOnClickListener(v -> {
             Intent intentPausa = new Intent(GameActivity.this, PausaActivity.class);
             startActivity(intentPausa);
         });
 
-        // (Opcional) De una vez puedes enlazar tu botón de pista a la Ayuda
-        findViewById(R.id.btnPista).setOnClickListener(v -> {
-            Intent intentAyuda = new Intent(GameActivity.this, AyudaActivity.class);
-            startActivity(intentAyuda);
+        // Lógica del botón del Foquito (Pista) - Castiga con 20 puntos
+        // Inicializamos el botón de la pista
+        btnPista = findViewById(R.id.btnPista);
+
+        // Lógica del botón del Foquito (Pista)
+        btnPista.setOnClickListener(v -> {
+            puntajeNivel -= 20;
+            Toast.makeText(this, "-20 Puntos. ¡Aquí tienes la respuesta!", Toast.LENGTH_SHORT).show();
+
+            int respuestaCorrectaObj = operacionActual.getRespuestaCorrecta();
+            respuestaActual = String.valueOf(respuestaCorrectaObj);
+            tvRespuesta.setText(respuestaActual);
+
+            // ¡MAGIA UX! Desactivamos el botón para que no lo puedan presionar dos veces
+            btnPista.setEnabled(false);
+            btnPista.setAlpha(0.5f); // Lo hacemos semitransparente para indicar que está apagado
         });
 
-        // 1. Listener de los botones numéricos (Se mantiene igual)
+        // 1. Listener de los botones numéricos
         View.OnClickListener listenerNumeros = view -> {
             Button botonPresionado = (Button) view;
             if (respuestaActual.length() < 5) {
@@ -78,7 +102,7 @@ public class GameActivity extends AppCompatActivity {
             }
         };
 
-        // Asignamos el listener a los 10 botones
+        // Asignamos el listener a los 10 botones numéricos
         findViewById(R.id.btnNum0).setOnClickListener(listenerNumeros);
         findViewById(R.id.btnNum1).setOnClickListener(listenerNumeros);
         findViewById(R.id.btnNum2).setOnClickListener(listenerNumeros);
@@ -90,7 +114,7 @@ public class GameActivity extends AppCompatActivity {
         findViewById(R.id.btnNum8).setOnClickListener(listenerNumeros);
         findViewById(R.id.btnNum9).setOnClickListener(listenerNumeros);
 
-        // 2. Lógica del botón DEL
+        // 2. Lógica del botón DEL (Borrar) - ¡RESTAURADO!
         findViewById(R.id.btnBorrar).setOnClickListener(v -> {
             if (!respuestaActual.isEmpty()) {
                 respuestaActual = respuestaActual.substring(0, respuestaActual.length() - 1);
@@ -98,7 +122,7 @@ public class GameActivity extends AppCompatActivity {
             }
         });
 
-        // 3. Lógica del botón OK (¡Actualizado con el progreso!)
+        // 3. Lógica del botón OK
         findViewById(R.id.btnOk).setOnClickListener(v -> {
             if (respuestaActual.isEmpty()) {
                 Toast.makeText(this, "Escribe una respuesta", Toast.LENGTH_SHORT).show();
@@ -112,7 +136,6 @@ public class GameActivity extends AppCompatActivity {
                 puntajeNivel += 10; // 10 puntos por acierto limpio
                 progressBarJuego.setProgress(preguntasContestadas);
 
-                // Verificamos si ya terminó el nivel
                 if (preguntasContestadas >= MAX_PREGUNTAS) {
                     finalizarNivel();
                 } else {
@@ -121,31 +144,38 @@ public class GameActivity extends AppCompatActivity {
                 }
             } else {
                 Toast.makeText(this, "Inténtalo de nuevo", Toast.LENGTH_SHORT).show();
-                puntajeNivel -= 2; // Castigo por error (opcional)
+                puntajeNivel -= 2;
                 respuestaActual = "";
                 tvRespuesta.setText(respuestaActual);
             }
         });
     }
 
-    private void generarNuevoAcertijo() {
-        operacionActual.generarOperacion();
-        tvAcertijo.setText(operacionActual.getAcertijoComoTexto());
-        respuestaActual = "";
-        tvRespuesta.setText(respuestaActual);
-    }
+        private void generarNuevoAcertijo() {
+            operacionActual.generarOperacion();
+            tvAcertijo.setText(operacionActual.getAcertijoComoTexto());
+            respuestaActual = "";
+            tvRespuesta.setText(respuestaActual);
 
-    //Método nuevo para manejar la victoria
+            // Reactivamos el foquito de pista para la nueva pregunta
+            if (btnPista != null) {
+                btnPista.setEnabled(true);
+                btnPista.setAlpha(1.0f); // Le regresamos su color original
+            }
+        }
+
     private void finalizarNivel() {
-        // Otorgamos la recompensa global (ej. 1 corona por pasar el nivel)
-        gestorDatos.agregarCoronas(1);
+        RecompensaCorona recompensa = new RecompensaCorona();
 
-        // Pasamos a la nueva pantalla de Victoria (¡Una Activity más para la rúbrica!)
+        if (puntajeNivel == 100) {
+            recompensa.otorgar(gestorDatos, 2);
+        } else {
+            recompensa.otorgar(gestorDatos);
+        }
+
         Intent intent = new Intent(GameActivity.this, VictoriaActivity.class);
         intent.putExtra("PUNTAJE_FINAL", puntajeNivel);
         startActivity(intent);
-
-        // Cerramos GameActivity para que si el niño presiona "Atrás", no vuelva al juego terminado
         finish();
     }
 }

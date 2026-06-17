@@ -38,7 +38,7 @@
         android:layout_marginTop="16dp"
         android:background="@drawable/btn_pixel_art"
         android:fontFamily="@font/jersey_10"
-        android:text="NIVELES"
+        android:text="LA BÓVEDA"
         android:textColor="#333333"
         android:textSize="32sp"
         app:layout_constraintEnd_toEndOf="parent"
