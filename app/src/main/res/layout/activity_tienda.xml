@@ -9,7 +9,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="32dp">
+        android:paddingBottom="48dp">
 
         <ImageButton
             android:id="@+id/btnBack"
@@ -29,14 +29,14 @@
             android:id="@+id/tvTituloTienda"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="24dp"
             android:fontFamily="@font/jersey_10"
             android:text="LA BÓVEDA"
             android:textColor="#FFCC00"
             android:textSize="56sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/btnBack" />
 
         <TextView
             android:id="@+id/tvMisCoronas"
@@ -55,7 +55,7 @@
             android:id="@+id/contenedorBotones"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="40dp"
             android:gravity="center"
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
@@ -66,45 +66,57 @@
                 android:id="@+id/btnComprarSumas"
                 android:layout_width="320dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
+                android:layout_marginBottom="32dp"
                 android:background="@drawable/btn_pixel_art"
                 android:fontFamily="@font/jersey_10"
                 android:text="JUGAR SUMAS"
                 android:textColor="#333333"
-                android:textSize="24sp" />
+                android:textSize="28sp" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnComprarRestas"
                 android:layout_width="320dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
+                android:layout_marginBottom="32dp"
                 android:background="@drawable/btn_pixel_art"
                 android:fontFamily="@font/jersey_10"
-                android:text="Desbloquear Restas \n(3 Coronas)"
+                android:text="DESBLOQUEAR RESTAS \n100"
+                android:drawableEnd="@drawable/ic_corona"
+                android:paddingStart="24dp"
+                android:paddingEnd="24dp"
+                android:drawablePadding="8dp"
                 android:textColor="#333333"
-                android:textSize="24sp" />
+                android:textSize="28sp" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnComprarMult"
                 android:layout_width="320dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
+                android:layout_marginBottom="32dp"
                 android:background="@drawable/btn_pixel_art"
                 android:fontFamily="@font/jersey_10"
-                android:text="Desbloquear Multiplicación \n(5 Coronas)"
+                android:text="DESBLOQUEAR MULTIPLICACIÓN \n300"
+                android:drawableEnd="@drawable/ic_corona"
+                android:paddingStart="24dp"
+                android:paddingEnd="24dp"
+                android:drawablePadding="8dp"
                 android:textColor="#333333"
-                android:textSize="24sp" />
+                android:textSize="28sp" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnComprarDiv"
                 android:layout_width="320dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp"
+                android:layout_marginBottom="16dp"
                 android:background="@drawable/btn_pixel_art"
                 android:fontFamily="@font/jersey_10"
-                android:text="Desbloquear División \n(10 Coronas)"
+                android:text="DESBLOQUEAR DIVISIÓN \n500"
+                android:drawableEnd="@drawable/ic_corona"
+                android:paddingStart="24dp"
+                android:paddingEnd="24dp"
+                android:drawablePadding="8dp"
                 android:textColor="#333333"
-                android:textSize="24sp" />
+                android:textSize="28sp" />
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

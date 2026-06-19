@@ -68,20 +68,28 @@ public class TiendaActivity extends AppCompatActivity {
 
         if (gestorDatos.isOperacionDesbloqueada("RESTA")) {
             btnRestas.setText("JUGAR RESTAS");
+            // Apagamos el ícono mandando puros ceros
+            btnRestas.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
         } else {
-            btnRestas.setText("Desbloquear Restas\n(100 Coronas)");
+            btnRestas.setText("DESBLOQUEAR RESTAS\n100");
+            // Encendemos el ícono a la derecha (Start, Top, End, Bottom)
+            btnRestas.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_corona, 0);
         }
 
         if (gestorDatos.isOperacionDesbloqueada("MULT")) {
             btnMult.setText("JUGAR MULTIPLICACIONES");
+            btnMult.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
         } else {
-            btnMult.setText("Desbloquear Multiplicación\n(300 Coronas)");
+            btnMult.setText("DESBLOQUEAR MULTIPLICACIÓN\n300");
+            btnMult.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_corona, 0);
         }
 
         if (gestorDatos.isOperacionDesbloqueada("DIV")) {
             btnDiv.setText("JUGAR DIVISIONES");
+            btnDiv.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
         } else {
-            btnDiv.setText("Desbloquear División\n(500 Coronas)");
+            btnDiv.setText("DESBLOQUEAR DIVISIÓN\n500");
+            btnDiv.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_corona, 0);
         }
     }
 }
