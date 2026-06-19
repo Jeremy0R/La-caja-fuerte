@@ -1,6 +1,7 @@
 package com.example.lacajafuerte;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -11,22 +12,24 @@ import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 import android.widget.ImageButton;
 
-    public class GameActivity extends AppCompatActivity {
+public class GameActivity extends AppCompatActivity {
 
-        private TextView tvRespuesta;
-        private TextView tvAcertijo;
-        private ProgressBar progressBarJuego;
-        private ImageButton btnPista;
-        private String respuestaActual = "";
+    private TextView tvRespuesta;
+    private TextView tvAcertijo;
+    private ProgressBar progressBarJuego;
+    private ImageButton btnPista;
+    private String respuestaActual = "";
 
     // Variables de lógica
     private OperacionMatematica operacionActual;
     private GestorDatos gestorDatos;
+    private MediaPlayer mediaPlayerJuego;
 
     // Variables para el nuevo flujo de nivel
     private int preguntasContestadas = 0;
     private final int MAX_PREGUNTAS = 10;
-    private int puntajeNivel = 0; // Para sumar puntos o restarlos si usan ayudas
+    private int puntajeNivel = 0;
+    private int numeroNivelActual = 1; // ¡NUEVA VARIABLE GLOBAL!
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,14 +40,30 @@ import android.widget.ImageButton;
         tvAcertijo = findViewById(R.id.tvAcertijo);
         progressBarJuego = findViewById(R.id.progressBarJuego);
 
-        // Configuramos la barra de progreso
+        // ¡ENLAZAMOS EL TÍTULO DEL NIVEL!
+        TextView tvNivelActual = findViewById(R.id.tvNivelActual);
+
         progressBarJuego.setMax(MAX_PREGUNTAS);
         progressBarJuego.setProgress(0);
 
         gestorDatos = new GestorDatos(this);
 
+        if (gestorDatos.isSonidoActivado()) {
+            mediaPlayerJuego = MediaPlayer.create(this, R.raw.pearl);
+            if (mediaPlayerJuego != null) {
+                mediaPlayerJuego.setLooping(true);
+                mediaPlayerJuego.start();
+            }
+        }
+
         String tipoOperacion = getIntent().getStringExtra("TIPO_OPERACION");
         int nivelDificultad = getIntent().getIntExtra("NIVEL_DIFICULTAD", 1);
+
+        // RECUPERAMOS EL NIVEL EXACTO EN EL QUE ESTAMOS
+        numeroNivelActual = getIntent().getIntExtra("NUMERO_NIVEL", 1);
+
+        // ACTUALIZAMOS EL TEXTO EN PANTALLA
+        tvNivelActual.setText("NIVEL " + numeroNivelActual);
 
         if ("RESTA".equals(tipoOperacion)) {
             operacionActual = new Resta(nivelDificultad);
@@ -58,28 +77,19 @@ import android.widget.ImageButton;
 
         generarNuevoAcertijo();
 
-        // ====================================================================
-        // BLOQUEADOR DE GESTOS LATERALES Y BOTÓN ATRÁS (Mecanismo AndroidX)
-        // ====================================================================
         getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
-                // Intercepta tanto el botón físico como el deslizamiento lateral de gestos
                 Toast.makeText(GameActivity.this, "Usa el botón de Pausa (||) para salir", Toast.LENGTH_SHORT).show();
             }
         });
 
-        // Lógica del botón de Pausa (||)
         findViewById(R.id.btnPausa).setOnClickListener(v -> {
             Intent intentPausa = new Intent(GameActivity.this, PausaActivity.class);
             startActivity(intentPausa);
         });
 
-        // Lógica del botón del Foquito (Pista) - Castiga con 20 puntos
-        // Inicializamos el botón de la pista
         btnPista = findViewById(R.id.btnPista);
-
-        // Lógica del botón del Foquito (Pista)
         btnPista.setOnClickListener(v -> {
             puntajeNivel -= 20;
             Toast.makeText(this, "-20 Puntos. ¡Aquí tienes la respuesta!", Toast.LENGTH_SHORT).show();
@@ -88,12 +98,10 @@ import android.widget.ImageButton;
             respuestaActual = String.valueOf(respuestaCorrectaObj);
             tvRespuesta.setText(respuestaActual);
 
-            // ¡MAGIA UX! Desactivamos el botón para que no lo puedan presionar dos veces
             btnPista.setEnabled(false);
-            btnPista.setAlpha(0.5f); // Lo hacemos semitransparente para indicar que está apagado
+            btnPista.setAlpha(0.5f);
         });
 
-        // 1. Listener de los botones numéricos
         View.OnClickListener listenerNumeros = view -> {
             Button botonPresionado = (Button) view;
             if (respuestaActual.length() < 5) {
@@ -102,7 +110,6 @@ import android.widget.ImageButton;
             }
         };
 
-        // Asignamos el listener a los 10 botones numéricos
         findViewById(R.id.btnNum0).setOnClickListener(listenerNumeros);
         findViewById(R.id.btnNum1).setOnClickListener(listenerNumeros);
         findViewById(R.id.btnNum2).setOnClickListener(listenerNumeros);
@@ -114,7 +121,6 @@ import android.widget.ImageButton;
         findViewById(R.id.btnNum8).setOnClickListener(listenerNumeros);
         findViewById(R.id.btnNum9).setOnClickListener(listenerNumeros);
 
-        // 2. Lógica del botón DEL (Borrar) - ¡RESTAURADO!
         findViewById(R.id.btnBorrar).setOnClickListener(v -> {
             if (!respuestaActual.isEmpty()) {
                 respuestaActual = respuestaActual.substring(0, respuestaActual.length() - 1);
@@ -122,7 +128,6 @@ import android.widget.ImageButton;
             }
         });
 
-        // 3. Lógica del botón OK
         findViewById(R.id.btnOk).setOnClickListener(v -> {
             if (respuestaActual.isEmpty()) {
                 Toast.makeText(this, "Escribe una respuesta", Toast.LENGTH_SHORT).show();
@@ -133,7 +138,7 @@ import android.widget.ImageButton;
 
             if (esCorrecto) {
                 preguntasContestadas++;
-                puntajeNivel += 10; // 10 puntos por acierto limpio
+                puntajeNivel += 10;
                 progressBarJuego.setProgress(preguntasContestadas);
 
                 if (preguntasContestadas >= MAX_PREGUNTAS) {
@@ -151,31 +156,63 @@ import android.widget.ImageButton;
         });
     }
 
-        private void generarNuevoAcertijo() {
-            operacionActual.generarOperacion();
-            tvAcertijo.setText(operacionActual.getAcertijoComoTexto());
-            respuestaActual = "";
-            tvRespuesta.setText(respuestaActual);
+    private void generarNuevoAcertijo() {
+        operacionActual.generarOperacion();
+        tvAcertijo.setText(operacionActual.getAcertijoComoTexto());
+        respuestaActual = "";
+        tvRespuesta.setText(respuestaActual);
 
-            // Reactivamos el foquito de pista para la nueva pregunta
-            if (btnPista != null) {
-                btnPista.setEnabled(true);
-                btnPista.setAlpha(1.0f); // Le regresamos su color original
-            }
+        if (btnPista != null) {
+            btnPista.setEnabled(true);
+            btnPista.setAlpha(1.0f);
         }
+    }
 
     private void finalizarNivel() {
-        RecompensaCorona recompensa = new RecompensaCorona();
-
-        if (puntajeNivel == 100) {
-            recompensa.otorgar(gestorDatos, 2);
-        } else {
-            recompensa.otorgar(gestorDatos);
+        if (mediaPlayerJuego != null) {
+            mediaPlayerJuego.release();
+            mediaPlayerJuego = null;
         }
+
+        int coronasAGuardar = (puntajeNivel == 100) ? 200 : puntajeNivel;
+
+        RecompensaCorona recompensa = new RecompensaCorona(coronasAGuardar);
+        recompensa.otorgar(gestorDatos);
+
+        String tipoOperacion = getIntent().getStringExtra("TIPO_OPERACION");
+
+        // AHORA USAMOS LA VARIABLE GLOBAL QUE YA TENEMOS
+        gestorDatos.completarNivel(tipoOperacion, numeroNivelActual);
 
         Intent intent = new Intent(GameActivity.this, VictoriaActivity.class);
         intent.putExtra("PUNTAJE_FINAL", puntajeNivel);
+        intent.putExtra("TIPO_OPERACION", tipoOperacion);
         startActivity(intent);
         finish();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (mediaPlayerJuego != null && mediaPlayerJuego.isPlaying()) {
+            mediaPlayerJuego.pause();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (mediaPlayerJuego != null && !mediaPlayerJuego.isPlaying() && gestorDatos.isSonidoActivado()) {
+            mediaPlayerJuego.start();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mediaPlayerJuego != null) {
+            mediaPlayerJuego.release();
+            mediaPlayerJuego = null;
+        }
     }
 }

@@ -46,4 +46,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnReanudar" />
 
+    <!-- NUEVO: Botón Circular para el Sonido -->
+    <ImageButton
+        android:id="@+id/btnToggleSonidoPausa"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_marginTop="48dp"
+        android:background="@drawable/bg_boton_circular"
+        android:padding="16dp"
+        android:scaleType="fitCenter"
+        android:src="@android:drawable/ic_lock_silent_mode_off"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnSalirMenu"
+        app:tint="#333333" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

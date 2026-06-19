@@ -6,4 +6,15 @@
     </style>
 
     <style name="Theme.LaCajaFuerte" parent="Base.Theme.LaCajaFuerte" />
+
+    <style name="BotonNivel">
+        <item name="android:layout_width">80dp</item>
+        <item name="android:layout_height">80dp</item>
+        <item name="android:layout_margin">8dp</item>
+        <item name="android:background">@drawable/btn_pixel_art</item>
+        <item name="android:fontFamily">@font/jersey_10</item>
+        <item name="android:textSize">36sp</item>
+        <item name="android:textColor">#333333</item>
+    </style>
+
 </resources>

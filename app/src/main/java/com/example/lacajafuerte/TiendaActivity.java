@@ -33,11 +33,12 @@ public class TiendaActivity extends AppCompatActivity {
         actualizarUI();
 
         btnSumas.setOnClickListener(v -> irAMapaNiveles("SUMA"));
-        btnRestas.setOnClickListener(v -> manejarClickOperacion("RESTA", 3, btnRestas));
-        btnMult.setOnClickListener(v -> manejarClickOperacion("MULT", 5, btnMult));
-        btnDiv.setOnClickListener(v -> manejarClickOperacion("DIV", 10, btnDiv));
 
-        // Lógica de regresar
+        // Ajustamos los parámetros de costo de la función (100, 300, 500)
+        btnRestas.setOnClickListener(v -> manejarClickOperacion("RESTA", 100, btnRestas));
+        btnMult.setOnClickListener(v -> manejarClickOperacion("MULT", 300, btnMult));
+        btnDiv.setOnClickListener(v -> manejarClickOperacion("DIV", 500, btnDiv));
+
         btnBack.setOnClickListener(v -> finish());
     }
 
@@ -56,7 +57,7 @@ public class TiendaActivity extends AppCompatActivity {
     }
 
     private void irAMapaNiveles(String tipoOperacion) {
-        Intent intent = new Intent(TiendaActivity.this, DificultadActivity.class);
+        Intent intent = new Intent(TiendaActivity.this, NivelesActivity.class); // <-- Asegúrate de que diga NivelesActivity
         intent.putExtra("TIPO_OPERACION", tipoOperacion);
         startActivity(intent);
     }
@@ -68,19 +69,19 @@ public class TiendaActivity extends AppCompatActivity {
         if (gestorDatos.isOperacionDesbloqueada("RESTA")) {
             btnRestas.setText("JUGAR RESTAS");
         } else {
-            btnRestas.setText("Desbloquear Restas\n(3 Coronas)");
+            btnRestas.setText("Desbloquear Restas\n(100 Coronas)");
         }
 
         if (gestorDatos.isOperacionDesbloqueada("MULT")) {
             btnMult.setText("JUGAR MULTIPLICACIONES");
         } else {
-            btnMult.setText("Desbloquear Multiplicación\n(5 Coronas)");
+            btnMult.setText("Desbloquear Multiplicación\n(300 Coronas)");
         }
 
         if (gestorDatos.isOperacionDesbloqueada("DIV")) {
             btnDiv.setText("JUGAR DIVISIONES");
         } else {
-            btnDiv.setText("Desbloquear División\n(10 Coronas)");
+            btnDiv.setText("Desbloquear División\n(500 Coronas)");
         }
     }
 }

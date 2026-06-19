@@ -7,11 +7,12 @@
     android:background="#0055AA"
     tools:context=".VictoriaActivity">
 
+    <!-- Margen reducido de 100dp a 48dp para darle aire al resto de la UI -->
     <TextView
         android:id="@+id/tvTituloVictoria"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="48dp"
         android:fontFamily="@font/jersey_10"
         android:text="¡CAJA ABIERTA!"
         android:textColor="#FFCC00"
@@ -22,22 +23,21 @@
 
     <ImageView
         android:id="@+id/ivCajaAbierta"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_marginTop="32dp"
-        android:src="@drawable/ic_candado"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvTituloVictoria"
-        app:tint="#FFFFFF" />
+        app:layout_constraintTop_toBottomOf="@+id/tvTituloVictoria" />
 
     <TextView
         android:id="@+id/tvPuntajeFinal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="24dp"
         android:fontFamily="@font/jersey_10"
-        android:text="Puntaje: 0"
+        android:text="Desempeño: 0"
         android:textColor="#FFFFFF"
         android:textSize="40sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -50,9 +50,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:fontFamily="@font/jersey_10"
-        android:text="+1 Corona Ganada"
+        android:gravity="center"
+        android:text="+0 Coronas"
         android:textColor="#FFCC00"
-        android:textSize="30sp"
+        android:textSize="32sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvPuntajeFinal" />
@@ -61,7 +62,7 @@
         android:id="@+id/btnVolverMenu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="64dp"
+        android:layout_marginBottom="48dp"
         android:background="@drawable/btn_pixel_art"
         android:paddingStart="24dp"
         android:paddingEnd="24dp"

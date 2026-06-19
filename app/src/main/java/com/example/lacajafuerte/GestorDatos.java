@@ -82,9 +82,16 @@ public class GestorDatos {
      * METODO: reiniciarProgreso
      * Borra todas las coronas acumuladas.
      */
+    // Busca este método en tu GestorDatos.java y reemplázalo completo
+    // ====================================================================
+    // REINICIAR PROGRESO (Versión limpia y profesional a prueba de bugs)
+    // ====================================================================
     public void reiniciarProgreso() {
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt(KEY_CORONAS, 0);
+
+        editor.clear(); // ¡LA SOLUCIÓN MAESTRA! Borra absolutamente todo el contenido del archivo
+
+        // Guardamos los cambios de forma inmediata en la memoria física
         editor.apply();
     }
 
@@ -100,5 +107,21 @@ public class GestorDatos {
         // La suma siempre es true por defecto. Las demás son false.
         if (operacion.equals("SUMA")) return true;
         return sharedPreferences.getBoolean("desbloqueado_" + operacion, false);
+    }
+
+    // Obtiene en qué nivel va el jugador (por defecto empieza en el 1)
+    public int getNivelMaximo(String operacion) {
+        return sharedPreferences.getInt("nivel_maximo_" + operacion, 1);
+    }
+
+    // Desbloquea el siguiente nivel cuando gana una partida
+    public void completarNivel(String operacion, int nivelJugado) {
+        int nivelActual = getNivelMaximo(operacion);
+        // Si acaba de pasar el nivel más alto que tenía, y no ha llegado al 10, le abrimos el siguiente
+        if (nivelJugado >= nivelActual && nivelJugado < 10) {
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putInt("nivel_maximo_" + operacion, nivelJugado + 1);
+            editor.apply();
+        }
     }
 }
