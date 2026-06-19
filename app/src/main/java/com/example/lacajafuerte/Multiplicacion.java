@@ -11,14 +11,23 @@ public class Multiplicacion extends OperacionMatematica {
     @Override
     public void generarOperacion() {
         Random random = new Random();
-        int limite = nivelDificultad * 10;
 
-        int temp1 = random.nextInt(limite) + 1;
-        int temp2 = random.nextInt(limite) + 1;
+        if (nivelDificultad == 1) {
+            num1 = random.nextInt(9) + 1;
+            num2 = random.nextInt(9) + 1;
+        } else if (nivelDificultad == 2) {
+            num1 = random.nextInt(90) + 10;
+            num2 = random.nextInt(90) + 10;
+        } else {
+            num1 = random.nextInt(900) + 100;
+            num2 = random.nextInt(900) + 100;
+        }
 
-        // El mayor siempre va primero para no tener resultados negativos
-        num1 = Math.max(temp1, temp2);
-        num2 = Math.min(temp1, temp2);
+        // Ordenamos para que el número más grande aparezca primero (es más fácil de leer)
+        int mayor = Math.max(num1, num2);
+        int menor = Math.min(num1, num2);
+        num1 = mayor;
+        num2 = menor;
 
         respuestaCorrecta = num1 * num2;
     }

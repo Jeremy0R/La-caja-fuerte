@@ -2,23 +2,36 @@ package com.example.lacajafuerte;
 
 import java.util.Random;
 
-// REQUISITO: Herencia de al menos un nivel (extends)
 public class Suma extends OperacionMatematica {
 
-    // Usamos el constructor de la clase padre
     public Suma(int nivelDificultad) {
         super(nivelDificultad);
     }
 
-    // REQUISITO: Sobrescritura de métodos
     @Override
     public void generarOperacion() {
         Random random = new Random();
-        // Genera números dependiendo del nivel (Nivel 1: hasta 10, Nivel 2: hasta 20...)
-        int limite = nivelDificultad * 10;
 
-        num1 = random.nextInt(limite) + 1;
-        num2 = random.nextInt(limite) + 1;
+        // 1. Generamos el PRIMER número basándonos en la dificultad
+        if (nivelDificultad == 1) {
+            num1 = random.nextInt(9) + 1;       // 1 al 9
+        } else if (nivelDificultad == 2) {
+            num1 = random.nextInt(90) + 10;     // 10 al 99
+        } else {
+            // EL FIX: 3 cifras (100 al 999)
+            num1 = random.nextInt(900) + 100;
+        }
+
+        // 2. Generamos el SEGUNDO número usando la misma lógica
+        if (nivelDificultad == 1) {
+            num2 = random.nextInt(9) + 1;
+        } else if (nivelDificultad == 2) {
+            num2 = random.nextInt(90) + 10;
+        } else {
+            num2 = random.nextInt(900) + 100;
+        }
+
+        // 3. Calculamos la respuesta
         respuestaCorrecta = num1 + num2;
     }
 

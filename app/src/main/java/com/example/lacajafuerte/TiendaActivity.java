@@ -1,71 +1,86 @@
 package com.example.lacajafuerte;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.ImageButton; // ¡Importante agregar esto!
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
-/**
- * CLASE: TiendaActivity
- * PROPOSITO: Permitir al usuario canjear sus coronas acumuladas por nuevos niveles.
- */
 public class TiendaActivity extends AppCompatActivity {
 
     private GestorDatos gestorDatos;
     private TextView tvMisCoronas;
+    private Button btnSumas, btnRestas, btnMult, btnDiv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tienda);
 
-        // Instanciamos nuestro gestor de persistencia
         gestorDatos = new GestorDatos(this);
-
         tvMisCoronas = findViewById(R.id.tvMisCoronas);
-        Button btnComprarRestas = findViewById(R.id.btnComprarRestas);
-        Button btnComprarMult = findViewById(R.id.btnComprarMult);
-        Button btnVolverTienda = findViewById(R.id.btnVolverTienda);
 
-        // Mostramos las coronas actuales al abrir la pantalla
-        actualizarTextoCoronas();
+        btnSumas = findViewById(R.id.btnComprarSumas);
+        btnRestas = findViewById(R.id.btnComprarRestas);
+        btnMult = findViewById(R.id.btnComprarMult);
+        btnDiv = findViewById(R.id.btnComprarDiv);
 
-        // LOGICA DE COMPRA: Restas
-        btnComprarRestas.setOnClickListener(v -> {
-            if (gestorDatos.gastarCoronas(3)) {
-                Toast.makeText(this, "¡Restas Desbloqueadas!", Toast.LENGTH_SHORT).show();
-                actualizarTextoCoronas();
-                // Aquí podrías usar SharedPreferences para guardar que ya se compró este nivel
-                btnComprarRestas.setText("RESTAS (DESBLOQUEADO)");
-                btnComprarRestas.setEnabled(false);
+        // Enlazamos el nuevo botón circular
+        ImageButton btnBack = findViewById(R.id.btnBack);
+
+        actualizarUI();
+
+        btnSumas.setOnClickListener(v -> irAMapaNiveles("SUMA"));
+        btnRestas.setOnClickListener(v -> manejarClickOperacion("RESTA", 3, btnRestas));
+        btnMult.setOnClickListener(v -> manejarClickOperacion("MULT", 5, btnMult));
+        btnDiv.setOnClickListener(v -> manejarClickOperacion("DIV", 10, btnDiv));
+
+        // Lógica de regresar
+        btnBack.setOnClickListener(v -> finish());
+    }
+
+    private void manejarClickOperacion(String operacion, int costo, Button boton) {
+        if (gestorDatos.isOperacionDesbloqueada(operacion)) {
+            irAMapaNiveles(operacion);
+        } else {
+            if (gestorDatos.gastarCoronas(costo)) {
+                gestorDatos.desbloquearOperacion(operacion);
+                Toast.makeText(this, "¡Desbloqueado exitosamente!", Toast.LENGTH_SHORT).show();
+                actualizarUI();
             } else {
                 Toast.makeText(this, "No tienes suficientes coronas", Toast.LENGTH_SHORT).show();
             }
-        });
-
-        // LOGICA DE COMPRA: Multiplicaciones
-        btnComprarMult.setOnClickListener(v -> {
-            if (gestorDatos.gastarCoronas(5)) {
-                Toast.makeText(this, "¡Multiplicaciones Desbloqueadas!", Toast.LENGTH_SHORT).show();
-                actualizarTextoCoronas();
-                btnComprarMult.setText("MULTIPLICACIÓN (DESBLOQUEADO)");
-                btnComprarMult.setEnabled(false);
-            } else {
-                Toast.makeText(this, "¡Sigue jugando para ganar más coronas!", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        // Botón para regresar
-        btnVolverTienda.setOnClickListener(v -> finish());
+        }
     }
 
-    /**
-     * METODO: actualizarTextoCoronas
-     * Consulta a SharedPreferences y actualiza el TextView en la interfaz.
-     */
-    private void actualizarTextoCoronas() {
-        int coronas = gestorDatos.obtenerCoronas();
-        tvMisCoronas.setText("Mis Coronas: " + coronas);
+    private void irAMapaNiveles(String tipoOperacion) {
+        Intent intent = new Intent(TiendaActivity.this, DificultadActivity.class);
+        intent.putExtra("TIPO_OPERACION", tipoOperacion);
+        startActivity(intent);
+    }
+
+    private void actualizarUI() {
+        tvMisCoronas.setText("Mis Coronas: " + gestorDatos.obtenerCoronas());
+        btnSumas.setText("JUGAR SUMAS");
+
+        if (gestorDatos.isOperacionDesbloqueada("RESTA")) {
+            btnRestas.setText("JUGAR RESTAS");
+        } else {
+            btnRestas.setText("Desbloquear Restas\n(3 Coronas)");
+        }
+
+        if (gestorDatos.isOperacionDesbloqueada("MULT")) {
+            btnMult.setText("JUGAR MULTIPLICACIONES");
+        } else {
+            btnMult.setText("Desbloquear Multiplicación\n(5 Coronas)");
+        }
+
+        if (gestorDatos.isOperacionDesbloqueada("DIV")) {
+            btnDiv.setText("JUGAR DIVISIONES");
+        } else {
+            btnDiv.setText("Desbloquear División\n(10 Coronas)");
+        }
     }
 }

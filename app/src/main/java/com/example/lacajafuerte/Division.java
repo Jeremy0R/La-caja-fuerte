@@ -11,16 +11,25 @@ public class Division extends OperacionMatematica {
     @Override
     public void generarOperacion() {
         Random random = new Random();
-        int limite = nivelDificultad * 10;
+        int divisor, cociente;
 
-        int temp1 = random.nextInt(limite) + 1;
-        int temp2 = random.nextInt(limite) + 1;
+        // Generamos el divisor y la respuesta (cociente) primero
+        if (nivelDificultad == 1) {
+            divisor = random.nextInt(9) + 1;
+            cociente = random.nextInt(9) + 1;
+        } else if (nivelDificultad == 2) {
+            divisor = random.nextInt(90) + 10;
+            cociente = random.nextInt(90) + 10;
+        } else {
+            divisor = random.nextInt(900) + 100;
+            cociente = random.nextInt(900) + 100;
+        }
 
-        // El mayor siempre va primero para no tener resultados negativos
-        num1 = Math.max(temp1, temp2);
-        num2 = Math.min(temp1, temp2);
+        num2 = divisor;
+        respuestaCorrecta = cociente;
 
-        respuestaCorrecta = num1 / num2;
+        // Multiplicamos para obtener el dividendo, garantizando que la división sea perfecta
+        num1 = num2 * respuestaCorrecta;
     }
 
     @Override

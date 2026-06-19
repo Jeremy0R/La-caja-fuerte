@@ -87,4 +87,18 @@ public class GestorDatos {
         editor.putInt(KEY_CORONAS, 0);
         editor.apply();
     }
+
+    // Método para desbloquear (guardar en memoria)
+    public void desbloquearOperacion(String operacion) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean("desbloqueado_" + operacion, true);
+        editor.apply();
+    }
+
+    // Método para preguntar si ya está desbloqueado
+    public boolean isOperacionDesbloqueada(String operacion) {
+        // La suma siempre es true por defecto. Las demás son false.
+        if (operacion.equals("SUMA")) return true;
+        return sharedPreferences.getBoolean("desbloqueado_" + operacion, false);
+    }
 }
