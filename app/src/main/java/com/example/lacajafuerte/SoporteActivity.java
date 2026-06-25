@@ -6,6 +6,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageButton; // Importación necesaria para el botón
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 public class SoporteActivity extends AppCompatActivity {
@@ -35,9 +37,14 @@ public class SoporteActivity extends AppCompatActivity {
         btnBack.setOnClickListener(v -> finish());
 
         btnLlamar.setOnClickListener(v -> {
-            Intent intentLlamada = new Intent(Intent.ACTION_DIAL);
-            intentLlamada.setData(Uri.parse("tel:" + NUMERO_SOPORTE));
-            startActivity(intentLlamada);
+            try {
+                Intent intentLlamada = new Intent(Intent.ACTION_DIAL);
+                intentLlamada.setData(Uri.parse("tel:" + NUMERO_SOPORTE));
+                startActivity(intentLlamada);
+            } catch (android.content.ActivityNotFoundException e) {
+                // Esto atrapa el error (crash) si el dispositivo no puede hacer llamadas
+                Toast.makeText(this, "Tu dispositivo no soporta llamadas telefónicas", Toast.LENGTH_LONG).show();
+            }
         });
 
         btnSms.setOnClickListener(v -> {
